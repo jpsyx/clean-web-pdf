@@ -23,6 +23,19 @@ def _download(url: str) -> str | None:
         return response.read(20_000_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
 
 
+# A complete `*…*`/`**…**` run whose closing marker is glued to the next word.
+# HTML-to-markdown conversion drops the space that sat outside the `<strong>`
+# or `<em>` tag, so `<strong>Grill the plan</strong> until …` comes back as
+# `**Grill the plan**until …` and renders without the space. Requiring a whole
+# well-formed run (rather than a bare marker) keeps opening markers such as the
+# one in `(**bold**)` and stray arithmetic asterisks untouched.
+GLUED_EMPHASIS_RE = re.compile(r"(\*{1,2})(?=\S)([^*]+?)(?<=\S)\1(?=[0-9A-Za-z])")
+
+
+def repair_emphasis_spacing(line: str) -> str:
+    return GLUED_EMPHASIS_RE.sub(r"\1\2\1 ", line)
+
+
 def parse_markdown_blocks(value: str) -> tuple[ContentBlock, ...]:
     blocks: list[ContentBlock] = []
     paragraph: list[str] = []
@@ -47,6 +60,7 @@ def parse_markdown_blocks(value: str) -> tuple[ContentBlock, ...]:
         if in_code:
             code.append(raw)
             continue
+        line = repair_emphasis_spacing(line)
         if not line:
             flush()
         elif match := re.match(r"^(#{1,6})\s+(.+)$", line):
