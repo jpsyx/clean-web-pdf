@@ -21,6 +21,30 @@ pdf-cleanup article.pdf ~/Documents/article-readable.pdf
 pdf-cleanup --help
 ```
 
+## Prerequisites
+
+`pdf-cleanup` uses the `markdown-to-pdf` command to render the cleaned
+Markdown back into a PDF. Install it before running `pdf-cleanup`.
+
+If you do not already have the renderer checkout, clone it and install it:
+
+```sh
+git clone https://github.com/jpsyx/markdown-to-pdf.git markdown-to-pdf
+cd markdown-to-pdf
+./install.sh
+```
+
+If the checkout already exists, just update and reinstall it:
+
+```sh
+cd markdown-to-pdf
+git pull
+./install.sh
+```
+
+The installer places the `markdown-to-pdf` executable in
+`$HOME/.local/bin` by default. Make sure that directory is on your `PATH`.
+
 The tool tries a source URL printed in the PDF, accepting webpage content only
 when it matches the saved PDF text. Otherwise it uses the PDF's layout and text
 layer. Scanned or image-only PDFs are not supported yet.
