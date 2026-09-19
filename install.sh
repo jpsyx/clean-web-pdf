@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Install pdf-cleanup as an executable on PATH.
+Install clean-web-pdf as an executable on PATH.
 
 Usage: ./install.sh
 
@@ -40,14 +40,14 @@ if [[ ! -x "$VENV/bin/python" ]] || ! "$VENV/bin/python" -c 'import sys; raise S
   "$PYTHON" -m venv "$VENV"
 fi
 "$VENV/bin/python" -m pip install --quiet --disable-pip-version-check -r "$SCRIPT_DIR/requirements.txt"
-LAUNCHER="$BIN_DIR/pdf-cleanup"
+LAUNCHER="$BIN_DIR/clean-web-pdf"
 cat > "$LAUNCHER" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 exec "$SCRIPT_DIR/run.sh" "\$@"
 EOF
 chmod 0755 "$LAUNCHER"
-echo "installed pdf-cleanup -> $LAUNCHER"
+echo "installed clean-web-pdf -> $LAUNCHER"
 case ":$PATH:" in
   *":$BIN_DIR:"*) ;;
   *) echo "note: $BIN_DIR is not on PATH" >&2 ;;

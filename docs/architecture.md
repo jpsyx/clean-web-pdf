@@ -1,6 +1,6 @@
 # Architecture
 
-`pdf-cleanup` extracts an article from a browser-printed PDF and renders a
+`clean-web-pdf` extracts an article from a browser-printed PDF and renders a
 clean PDF through the installed `markdown-to-pdf` command.
 
 ## Flow

@@ -1,4 +1,4 @@
-# AGENTS.md — rules for working on pdf-cleanup
+# AGENTS.md: rules for working on clean-web-pdf
 
 Rules for any human or agent modifying this repo. This file is canonical;
 `CLAUDE.md` and `.cursorrules` symlink to it, and Codex/opencode read
@@ -15,7 +15,7 @@ is the clone-local entry point and `install.sh` installs a real executable.
 any location — resolve paths relative to the script (via `BASH_SOURCE`),
 never hardcode an absolute or per-machine path.
 - Keep its name and location (`run.sh` at the repo root) stable.
-- `install.sh` installs one fixed `pdf-cleanup` launcher under `BIN_DIR`,
+- `install.sh` installs one fixed `clean-web-pdf` launcher under `BIN_DIR`,
   defaulting to `$HOME/.local/bin`, and is safe to run repeatedly.
 
 ## Hard rules

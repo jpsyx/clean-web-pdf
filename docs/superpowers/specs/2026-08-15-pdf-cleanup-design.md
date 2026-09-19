@@ -2,7 +2,7 @@
 
 ## Summary
 
-`pdf-cleanup` converts a browser-generated article PDF into a cleaner PDF that
+`clean-web-pdf` converts a browser-generated article PDF into a cleaner PDF that
 contains only the article title, author, source website, and article text. It
 reconstructs the content as temporary Markdown and delegates final rendering to
 the existing `markdown-to-pdf` command.
@@ -24,7 +24,7 @@ a usable text layer. It does not support scanned or image-only PDFs.
   PDF snapshot.
 - Fall back to layout-aware extraction from the PDF when the source webpage is
   unavailable, changed, or absent.
-- Install `pdf-cleanup` as a normal executable on `PATH`.
+- Install `clean-web-pdf` as a normal executable on `PATH`.
 
 ## Non-goals
 
@@ -39,7 +39,7 @@ a usable text layer. It does not support scanned or image-only PDFs.
 ## Command-line interface
 
 ```text
-pdf-cleanup <input.pdf> [output]
+clean-web-pdf <input.pdf> [output]
 ```
 
 Arguments:
@@ -212,7 +212,7 @@ markdown-to-pdf <temporary.md> --out <resolved-output.pdf>
 ```
 
 Subprocess output is streamed to the caller. A nonzero renderer exit is returned
-as a `pdf-cleanup` failure, and no success message is printed.
+as a `clean-web-pdf` failure, and no success message is printed.
 
 ## Installation
 
@@ -224,7 +224,7 @@ virtual environment when present, and otherwise uses `python3`.
 1. Handles help before side effects.
 2. Creates or repairs a private virtual environment in the checkout.
 3. Installs the pinned requirements.
-4. Writes one executable launcher at `$BIN_DIR/pdf-cleanup`, defaulting to
+4. Writes one executable launcher at `$BIN_DIR/clean-web-pdf`, defaulting to
    `$HOME/.local/bin`.
 5. Overwrites that same launcher on repeated runs.
 6. Warns with an actionable fix when `BIN_DIR` is not on `PATH`.

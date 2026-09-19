@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build an installed `pdf-cleanup` command that extracts a browser-printed article into clean Markdown and renders a new PDF containing only its title, author, source, and prose.
+**Goal:** Build an installed `clean-web-pdf` command that extracts a browser-printed article into clean Markdown and renders a new PDF containing only its title, author, source, and prose.
 
 **Architecture:** A Python CLI inspects the source PDF into immutable layout records, tries a validated network article extraction, and falls back to deterministic PDF-layout heuristics. Both paths produce the same article model, which is rendered to temporary Markdown and passed to the external `markdown-to-pdf` executable.
 
@@ -18,7 +18,7 @@
 - Never overwrite the input PDF.
 - `-h` and `--help` must exit successfully before dependency checks, network access, or other side effects.
 - Missing required arguments must print usage to standard error and exit nonzero.
-- `install.sh` installs one fixed `$BIN_DIR/pdf-cleanup` launcher and defaults `BIN_DIR` to `$HOME/.local/bin`.
+- `install.sh` installs one fixed `$BIN_DIR/clean-web-pdf` launcher and defaults `BIN_DIR` to `$HOME/.local/bin`.
 - Every entry point must resolve its own directory and work from an arbitrary current directory.
 - Runtime dependencies are pinned exactly in `requirements.txt`.
 - Tests are deterministic and do not require network access.
@@ -29,7 +29,7 @@
 ## File Structure
 
 ```text
-pdf-cleanup/
+clean-web-pdf/
 ├── AGENTS.md                         # Public-safe contributor and development rules
 ├── LICENSE                           # MIT license
 ├── README.md                         # Installation, CLI usage, limits, and examples
@@ -818,7 +818,7 @@ Expected: failures because renderer orchestration is absent.
 
 Use `shutil.which("markdown-to-pdf")` when no renderer override is provided.
 Check for the renderer before opening the PDF or fetching a URL. Use
-`TemporaryDirectory(prefix="pdf-cleanup-")` and write `article.md` within it.
+`TemporaryDirectory(prefix="clean-web-pdf-")` and write `article.md` within it.
 Call the renderer through `subprocess.Popen` with standard error inherited and
 standard output piped in text mode. Print each stdout line immediately, and
 recognize the renderer's final `Wrote <path>` line to return the actual path
@@ -860,7 +860,7 @@ If commit authorization exists, commit with `git add pdf_cleanup/markdown.py pdf
 
 - Consumes: `validate_input`, `resolve_output_path`, and `cleanup_pdf`.
 - Produces: `build_parser() -> argparse.ArgumentParser` and `main(argv: Sequence[str] | None = None) -> int`.
-- Produces: clone-local `run.sh` and idempotent installed launcher at `$BIN_DIR/pdf-cleanup`.
+- Produces: clone-local `run.sh` and idempotent installed launcher at `$BIN_DIR/clean-web-pdf`.
 - Produces test helper `run_command(*args: str, path: str) -> subprocess.CompletedProcess[str]`, which invokes the checkout's `run.sh` with captured text output and an explicitly supplied `PATH`.
 
 - [ ] **Step 1: Write failing CLI tests**
@@ -873,7 +873,7 @@ def test_help_succeeds_before_dependency_checks(self):
     result = run_command("--help", path="/usr/bin:/bin")
     self.assertEqual(result.returncode, 0)
     self.assertIn("Clean a browser-printed article PDF", result.stdout)
-    self.assertIn("pdf-cleanup <input.pdf> [output]", result.stdout)
+    self.assertIn("clean-web-pdf <input.pdf> [output]", result.stdout)
     self.assertEqual(result.stderr, "")
 
 def test_missing_input_prints_usage_to_stderr(self):
@@ -891,7 +891,7 @@ Expected: the starter `run.sh` does not provide the required interface.
 
 - [ ] **Step 3: Implement the parser and top-level errors**
 
-Use `argparse` with `prog="pdf-cleanup"`, one required `input` positional and
+Use `argparse` with `prog="clean-web-pdf"`, one required `input` positional and
 one optional `output` positional. The description, epilog examples, and argument
 help must cover all output-resolution behavior and the `markdown-to-pdf`
 requirement. Catch only `CleanupError`, print `error: <message>` to standard
@@ -965,7 +965,7 @@ Expected: failure because `install.sh` does not exist.
 Follow the established renderer repository convention: handle `-h` and
 `--help` first; reject all other arguments; resolve `SCRIPT_DIR`; require Python
 3.10+; recreate a broken `.venv`; install `requirements.txt`; verify imports;
-write a launcher that execs `run.sh`; use a fixed `$BIN_DIR/pdf-cleanup` path;
+write a launcher that execs `run.sh`; use a fixed `$BIN_DIR/clean-web-pdf` path;
 warn if `BIN_DIR` is absent from `PATH`; and print actionable recovery when the
 checkout was moved. Do not include any private paths or orchestration terms.
 
@@ -995,7 +995,7 @@ Expected: help exits `0`, the installer produces one executable, and its
 
 Run: `git diff --check && git status --short`
 
-If commit authorization exists, commit with `git add main.py run.sh install.sh .gitignore tests/test_cli_install.py && git commit -m "feat: install pdf-cleanup on PATH"`.
+If commit authorization exists, commit with `git add main.py run.sh install.sh .gitignore tests/test_cli_install.py && git commit -m "feat: install clean-web-pdf on PATH"`.
 
 ---
 
@@ -1132,7 +1132,7 @@ TEST_BIN="$(mktemp -d)"
 BIN_DIR="$TEST_BIN" ./install.sh
 BIN_DIR="$TEST_BIN" ./install.sh
 cd /tmp
-"$TEST_BIN/pdf-cleanup" --help
+"$TEST_BIN/clean-web-pdf" --help
 ```
 
 Expected: both installations succeed, `find "$TEST_BIN" -maxdepth 1 -type f`
@@ -1162,7 +1162,7 @@ account placeholder themselves:
 ```bash
 git add -A
 git commit -m "feat: add browser article PDF cleanup"
-gh repo create pdf-cleanup --public
+gh repo create clean-web-pdf --public
 git push -u origin main
 ```
 

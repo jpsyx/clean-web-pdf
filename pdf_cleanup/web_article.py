@@ -18,7 +18,7 @@ FETCH_CONFIG["DEFAULT"]["MAX_REDIRECTS"] = "10"
 
 
 def _download(url: str) -> str | None:
-    request = Request(url, headers={"User-Agent": "Mozilla/5.0 pdf-cleanup"})
+    request = Request(url, headers={"User-Agent": "Mozilla/5.0 clean-web-pdf"})
     with urlopen(request, timeout=10) as response:
         return response.read(20_000_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
 

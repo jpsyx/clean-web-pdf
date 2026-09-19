@@ -1,4 +1,4 @@
-# pdf-cleanup
+# clean-web-pdf
 
 Clean browser-printed article PDFs and render a readable copy containing the
 article title, author, source, headings, and prose.
@@ -6,7 +6,7 @@ article title, author, source, headings, and prose.
 ## Usage
 
 ```sh
-pdf-cleanup <input.pdf> [output]
+clean-web-pdf <input.pdf> [output]
 ```
 
 Requires Python 3.10+ and `markdown-to-pdf`. With no output argument,
@@ -15,16 +15,16 @@ directory keeps the source filename; another path is the exact output filename.
 
 ```sh
 ./install.sh
-pdf-cleanup article.pdf
-pdf-cleanup article.pdf ~/Documents/clean/
-pdf-cleanup article.pdf ~/Documents/article-readable.pdf
-pdf-cleanup --help
+clean-web-pdf article.pdf
+clean-web-pdf article.pdf ~/Documents/clean/
+clean-web-pdf article.pdf ~/Documents/article-readable.pdf
+clean-web-pdf --help
 ```
 
 ## Prerequisites
 
-`pdf-cleanup` uses the `markdown-to-pdf` command to render the cleaned
-Markdown back into a PDF. Install it before running `pdf-cleanup`.
+`clean-web-pdf` uses the `markdown-to-pdf` command to render the cleaned
+Markdown back into a PDF. Install it before running `clean-web-pdf`.
 
 If you do not already have the renderer checkout, clone it and install it:
 

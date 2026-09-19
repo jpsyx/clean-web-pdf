@@ -24,7 +24,7 @@ def select_article(snapshot: PdfSnapshot, web_extractor: Callable[[str], Article
 
 def render_with_markdown_to_pdf(markdown: str, output: Path, renderer: str) -> Path:
     existed = output.exists()
-    with tempfile.TemporaryDirectory(prefix="pdf-cleanup-") as directory:
+    with tempfile.TemporaryDirectory(prefix="clean-web-pdf-") as directory:
         markdown_path = Path(directory) / "article.md"
         markdown_path.write_text(markdown, encoding="utf-8")
         process = subprocess.Popen([renderer, str(markdown_path), "--out", str(output)], stdout=subprocess.PIPE, text=True)

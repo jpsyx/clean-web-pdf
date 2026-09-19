@@ -11,9 +11,9 @@ from pdf_cleanup.paths import resolve_output_path, validate_input
 
 def build_parser() -> argparse.ArgumentParser:
     return argparse.ArgumentParser(
-        prog="pdf-cleanup",
+        prog="clean-web-pdf",
         description="Clean a browser-printed article PDF and render a readable PDF.",
-        epilog=("Examples:\n  pdf-cleanup article.pdf\n  pdf-cleanup article.pdf /tmp/clean/\n  pdf-cleanup article.pdf ~/Documents/article-clean.pdf"),
+        epilog=("Examples:\n  clean-web-pdf article.pdf\n  clean-web-pdf article.pdf /tmp/clean/\n  clean-web-pdf article.pdf ~/Documents/article-clean.pdf"),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
