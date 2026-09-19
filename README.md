@@ -23,6 +23,13 @@ clean-web-pdf --help
 
 ## Prerequisites
 
+`./install.sh` installs the `clean-web-pdf` launcher in `$HOME/.local/bin`.
+Set `BIN_DIR` to choose another directory, or use `--name <command>` to choose
+another filename, for example `./install.sh --name clean-pdf-dev`. Repeating
+the same invocation replaces that launcher in place. The installer repairs an
+unusable Python environment and installs its dependencies before reporting
+success. Help and invalid arguments never start installation.
+
 `clean-web-pdf` uses the `markdown-to-pdf` command to render the cleaned
 Markdown back into a PDF. Install it before running `clean-web-pdf`.
 
